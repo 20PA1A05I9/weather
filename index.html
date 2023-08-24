@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fresh air</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <style>
+    /* .temp{
+      height:5vh;
+    } */
+    .tempcol{
+      border-color: yellowgreen;
+    }
+    .windcard{
+      height:30vh;
+    }
+    /* .content{
+      color:orange;
+    } */
+    .modal{
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Weather App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Usage Guide</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-disabled="true">Contact us</a>
+          </li> -->
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" id="city" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" id="submit" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 id="myModalLabel">Sorry An error occurred</h3>
+          </div>
+          <div class="modal-body">
+              <p>Please enter a valid location</p>
+          </div>
+          <div class="modal-footer">
+              <button id="modalclose" class="btn bg-danger" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+  <div class="container">
+    <h2 class="text-center my-4">Weather in <span id="cityname"></span></h2>
+    <main>
+      <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm border-greenyellow tempcol">
+            <div class="card-header py-3"style="background-color: greenyellow;">
+              <h4 class="my-0 fw-normal">Temperatures</h4>
+            </div>
+            <div class="card-body windcard">
+              <h2 class="card-title pricing-card-title">Temperature is <span id="temp"></span><small
+                  class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Min Temperature is <span id="min_temp"></span></li>
+                  <li class="my-3">Max Temperature is <span id="max_temp"></span></li>
+                </ul>
+                <!-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm border-info">
+            <div class="card-header py-3 text-bg-info border-info">
+              <h4 class="my-0 fw-normal">Humidity Info</h4>
+            </div>
+            <div class="card-body windcard">
+              <h2 class="card-title pricing-card-title">Humidity is <span id="humidity"></span>%<small
+                  class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Cloud % is <span id="cloud_pct"></span></li>
+                  <li class="my-3">Feels like <span id="feels_like"></span></li>
+                </ul>
+                <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button> -->
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card mb-4 rounded-3 shadow-sm border-primary temp">
+            <div class="card-header py-3 text-bg-primary border-primary">
+              <h4 class="my-0 fw-normal">Wind Info</h4>
+            </div>
+            <div class="card-body windcard">
+              <h2 class="card-title pricing-card-title">wind speed is <span id="wind_speed"></span><small
+                  class="text-body-secondary fw-light"></small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <!-- <li>wind speed is <span id="wind_speed"></span></li> -->
+                  <li>wind degrees is <span id="wind_degrees"></span></li>
+                  <!-- <li>sunrise at <span id="sunrise"></span></li>
+                  <li>sunset at <span id="sunset"></span></li> -->
+                </ul>
+                <!-- <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="display-6 text-center mb-4"><b class="content">Weather of other common places</b></h2>
+        <div class="table-responsive">
+          <table class="table text-center table-dark table-hover">
+            <thead>
+              <tr>
+                <th style="width: 10%;background-color:royalblue">City</th>
+                <th style="width: 10%;background-color:hotpink;">Cloud %</th>
+                <th style="width: 10%;background-color:royalblue">Temperature</th>
+                <th style="width: 10%;background-color:hotpink">Feels like</th>
+                <th style="width: 10%;background-color:royalblue">Humidity</th>
+                <th style="width: 10%;background-color:hotpink">Min temp</th>
+                <th style="width: 10%;background-color:royalblue">Max temp</th>
+                <th style="width: 10%;background-color:hotpink">wind speed</th>
+                <th style="width: 10%;background-color:royalblue">wind degrees</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-start">New york</th>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+                  <td class="New york"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">London</th>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+                <td class="London"></td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <th scope="row" class="text-start">Shanghai</th>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+                <td class="Shanghai"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Chennai</th>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+                <td class="Chennai"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Melbourne</th>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+                <td class="Melbourne"></td>
+              </tr>
+              <tr>
+                <th scope="row" class="text-start">Dubai</th>
+                <td class="Dubai"></td>
+                <td class="Dubai"></td>
+                <td class="Dubai"></td>
+                <td class="Dubai"></td>
+                <td class="Dubai"></td>
+                <td class="Dubai"></td> 
+                <td class="Dubai"></td>
+                <td class="Dubai"></td>  
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
